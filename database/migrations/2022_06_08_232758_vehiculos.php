@@ -17,6 +17,7 @@ class Vehiculos extends Migration
             $table->increments('id');
             $table->integer('cat_marca_id')->unsigned();
             $table->integer('modelo');
+            $table->string('linea');
             $table->integer('cat_color_id')->unsigned();
             $table->string('vin');
             $table->string('placa');

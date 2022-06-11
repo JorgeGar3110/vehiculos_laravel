@@ -10,12 +10,9 @@
     <title>Dashboard Template · Bootstrap v5.2</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/">
-
-
-
-
-
     <link href="{{ asset('assets/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('css/global.css') }}" rel="stylesheet">
 
     <style>
         .bd-placeholder-img {
@@ -73,17 +70,36 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('assets/dashboard/dashboard.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
+
+    <!-- ESTILOS -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/parsley/parsley.css') }}">
+    <link rel="stylesheet"src="{{ asset('assets/bootstrap-table/bootstrap-table.css') }}">
+
+    <!-- noty -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/noty/themes/sunset.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/noty/noty.css') }}">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbNNAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     
-    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table-locale-all.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
+    <!-- BOOTSTRAP TABLE -->
+    <script type="text/javascript" src="{{ asset('assets/bootstrap-table/bootstrap-table.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/bootstrap-table/extensions/export/bootstrap-table-export.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/bootstrap-table/locale/bootstrap-table-es-MX.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/bootstrap-table/extensions/filter-control/bootstrap-table-filter-control.js') }}"></script>
+    <script src="{{ asset('assets/tableExport/tableExport.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap-table/extensions/cookie/bootstrap-table-cookie.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/parsley/parsley.js') }}"></script>
+
+    <script defer type="text/javascript" src="{{ asset('assets/sweetalert/sweetalert-2.1.0.js') }}"></script>
+
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Company name</a>
@@ -161,10 +177,15 @@
         </div>
     </div>
 
+    <script>
+        var baseUrl = "{{ env('APP_URL') }}";
+    </script>
+
     <script src="{{ asset('assets/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/dashboard/dashboard.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     
 </body>

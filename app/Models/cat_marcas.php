@@ -14,6 +14,5 @@ class cat_marcas extends Model
     ];
 
     protected $hidden = [
-        'id',
     ];
 }
