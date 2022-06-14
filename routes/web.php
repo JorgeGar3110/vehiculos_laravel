@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\PropietariosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +20,25 @@ use App\Http\Controllers\MarcaController;
 Route::get('/', [MainController::class, 'inicio']);
 
 
-Route::get('/marca', [MarcaController::class, 'inicio']);
-Route::get('/marca/obtenerRegistros', [MarcaController::class, 'obtenerRegistros']);
-Route::post('/marca/obtenerMarca', [MarcaController::class, 'obtenerMarca']);
-Route::post('/marca/editar', [MarcaController::class, 'editar']);
-Route::post('/marca/guardar', [MarcaController::class, 'guardar']);
-Route::post('/marca/eliminar', [MarcaController::class, 'eliminar']);
+Route::get('/marcas', [MarcaController::class, 'inicio']);
+Route::get('/marcas/obtenerRegistros', [MarcaController::class, 'obtenerRegistros']);
+Route::post('/marcas/obtenerMarca', [MarcaController::class, 'obtenerMarca']);
+Route::post('/marcas/editar', [MarcaController::class, 'editar']);
+Route::post('/marcas/guardar', [MarcaController::class, 'guardar']);
+Route::post('/marcas/eliminar', [MarcaController::class, 'eliminar']);
+
+
+Route::get('/colores', [ColorController::class, 'inicio']);
+Route::get('/colores/obtenerRegistros', [ColorController::class, 'obtenerRegistros']);
+Route::post('/colores/obtenerColor', [ColorController::class, 'obtenerColor']);
+Route::post('/colores/editar', [ColorController::class, 'editar']);
+Route::post('/colores/guardar', [ColorController::class, 'guardar']);
+Route::post('/colores/eliminar', [ColorController::class, 'eliminar']);
+
+Route::get('/propietarios', [PropietariosController::class, 'inicio']);
+Route::get('/propietarios/obtenerRegistros', [PropietariosController::class, 'obtenerRegistros']);
+Route::post('/propietarios/obtenerPropietario', [PropietariosController::class, 'obtenerPropietario']);
+Route::post('/propietarios/editar', [PropietariosController::class, 'editar']);
+Route::post('/propietarios/guardar', [PropietariosController::class, 'guardar']);
+Route::post('/propietarios/eliminar', [PropietariosController::class, 'eliminar']);
 

@@ -3,19 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-use App\Models\cat_marcas;
+use App\Models\propietarios;
+use App\Models\cat_generos;
 
-class MarcaController extends Controller
+class PropietariosController extends Controller
 {
     public function inicio()
     {
+        $generos = cat_generos::select('*')
+            ->whereNull('deleted_at')
+            ->get();
+
         $datos = [
-            'urlGuardar' => 'marcas/guardar',
-            'urlEditar' => 'marcas/editar',
+            'urlGuardar' => 'propietarios/guardar',
+            'urlEditar' => 'propietarios/editar',
+            'generos' => $generos
         ];
 
-        return view('marca/inicio', $datos);
+        return view('propietarios/inicio', $datos);
     }
 
     public function obtenerRegistros(Request $request)
@@ -25,8 +32,15 @@ class MarcaController extends Controller
             'total' => 0
         ];
 
-        $query = cat_marcas::select('cat_marcas.*')
-                ->orderBy('cat_marcas.id','ASC')->whereNull('deleted_at');
+        $query = propietarios::select(
+                    'propietarios.id', 
+                    DB::raw('CONCAT(propietarios.nombre, " ", propietarios.apellido_paterno, " ", propietarios.apellido_materno) as nombre_completo'), 
+                    'propietarios.curp', 
+                    'propietarios.fecha_nacimiento', 
+                    'cat_generos.nombre as genero')
+                ->join('cat_generos', 'cat_generos.id' , '=' , 'propietarios.cat_genero_id')
+                ->orderBy('propietarios.id','ASC')
+                ->whereNull('propietarios.deleted_at');
 
         if(isset($request->filter))
         {
@@ -59,7 +73,29 @@ class MarcaController extends Controller
         return response()->json($response);
     }
 
-    function obtenerMarca(Request $request)
+    function guardar(Request $request)
+    {
+        $response = [
+            'error' => false,
+            'msj' => ""
+        ];
+
+        $marca = propietarios::insert($request->propietarios);
+
+        if(!$marca)
+        {
+            $response['error'] = true;
+            $response['msj'] = "No fue posible guardar el propietario";
+        }
+        else
+        {
+            $response['msj'] = "Propietario guardado correctamente";
+        }
+
+        return response()->json($response);
+    }
+
+    function obtenerPropietario(Request $request)
     {
         $response = [
             'error' => false,
@@ -68,11 +104,11 @@ class MarcaController extends Controller
         ];
 
         if(!isset($request->id))
-            return redirect()->route('/marcas');
+            return redirect()->route('/propietarios');
 
         $id = base64_decode($request->id);
 
-        $marca = cat_marcas::find($id);
+        $marca = propietarios::find($id);
 
         if(!$marca)
         {
@@ -95,43 +131,21 @@ class MarcaController extends Controller
         ];
 
         if(!isset($request->id))
-            return redirect()->route('/marcas');
+            return redirect()->route('/propietarios');
 
         $id = base64_decode($request->id);
 
-        $marca = cat_marcas::where("id", '=' , $id)
-                    ->update($request->cat_marcas);
+        $marca = propietarios::where("id", '=' , $id)
+                    ->update($request->propietarios);
 
         if(!$marca)
         {
             $response['error'] = true;
-            $response['msj'] = "No fue posible actualizar la marca seleccionada";
+            $response['msj'] = "No fue posible actualizar el propietario seleccionado";
         }
         else
         {
-            $response['msj'] = "Marca actualizada correctamente";
-        }
-
-        return response()->json($response);
-    }
-
-    function guardar(Request $request)
-    {
-        $response = [
-            'error' => false,
-            'msj' => ""
-        ];
-
-        $marca = cat_marcas::insert($request->cat_marcas);
-
-        if(!$marca)
-        {
-            $response['error'] = true;
-            $response['msj'] = "No fue posible guardar la marca seleccionada";
-        }
-        else
-        {
-            $response['msj'] = "Marca guardada correctamente";
+            $response['msj'] = "Propietario actualizado correctamente";
         }
 
         return response()->json($response);
@@ -145,21 +159,21 @@ class MarcaController extends Controller
         ];
 
         if(!isset($request->id))
-            return redirect()->route('/marcas');
+            return redirect()->route('/propietarios');
 
         $id = base64_decode($request->id);
 
-        $marca = cat_marcas::where("id", '=' , $id)
+        $marca = propietarios::where("id", '=' , $id)
                     ->update(['deleted_at' => date('Y-m-d H:m:s')]);
 
         if(!$marca)
         {
             $response['error'] = true;
-            $response['msj'] = "No fue posible eliminar la marca seleccionada";
+            $response['msj'] = "No fue posible eliminar el propietario seleccionado";
         }
         else
         {
-            $response['msj'] = "Marca eliminada correctamente";
+            $response['msj'] = "Propietario eliminado correctamente";
         }
 
         return response()->json($response);
