@@ -15,4 +15,14 @@ class cat_colores extends Model
 
     protected $hidden = [
     ];
+
+
+    function obtenerColores()
+    {
+        $colores = cat_colores::select('cat_colores.*')
+                ->orderBy('cat_colores.id','ASC')->whereNull('deleted_at')
+                ->get();
+        
+        return $colores;
+    }
 }

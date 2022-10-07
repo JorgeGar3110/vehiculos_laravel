@@ -5,6 +5,7 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PropietariosController;
+use App\Http\Controllers\VehiculosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,11 @@ Route::post('/propietarios/obtenerPropietario', [PropietariosController::class, 
 Route::post('/propietarios/editar', [PropietariosController::class, 'editar']);
 Route::post('/propietarios/guardar', [PropietariosController::class, 'guardar']);
 Route::post('/propietarios/eliminar', [PropietariosController::class, 'eliminar']);
+
+Route::get('/vehiculos', [VehiculosController::class, 'inicio']);
+Route::get('/vehiculos/obtenerRegistros', [VehiculosController::class, 'obtenerRegistros']);
+Route::post('/vehiculos/obtenerVehiculo', [VehiculosController::class, 'obtenerVehiculo']);
+Route::post('/vehiculos/editar', [VehiculosController::class, 'editar']);
+Route::post('/vehiculos/guardar', [VehiculosController::class, 'guardar']);
+Route::post('/vehiculos/eliminar', [VehiculosController::class, 'eliminar']);
 

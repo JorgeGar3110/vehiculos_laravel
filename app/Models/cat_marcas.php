@@ -15,4 +15,15 @@ class cat_marcas extends Model
 
     protected $hidden = [
     ];
+
+
+    function obtenerMarcas()
+    {
+        $marcas = cat_marcas::select('cat_marcas.*')
+                ->orderBy('cat_marcas.id','ASC')
+                ->whereNull('deleted_at')
+                ->get();
+
+        return $marcas;
+    }
 }
