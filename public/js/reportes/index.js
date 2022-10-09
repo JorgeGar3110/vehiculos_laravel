@@ -3,8 +3,8 @@ var parsleyValidation = false;
 
 $(document).ready(function () {
 
-  $('#tablaVehiculos').bootstrapTable({
-    url: `${baseUrl}vehiculos/obtenerRegistros`,
+  $('#tablaReportes').bootstrapTable({
+    url: `${baseUrl}reportes/obtenerRegistros`,
     height: 0,
     pageSize: 3,
     pagination: true,
@@ -42,14 +42,26 @@ $(document).ready(function () {
       return params;
     },
     columns: [{
-      title: 'Linea',
+      title: 'No. Reporte',
       align: 'center',
       valign: 'middle',
       clickToSelect: false,
+      field: 'no_reporte',
+      formatter: function (value, row, index) {
+        if (row.no_reporte !== null) {
+          return `<h5 class="mrg10A">${row.no_reporte.toUpperCase()}</h5>`
+        }
+        return "<empty> - </empty>";
+      }
+    },
+    {
+      title: 'Linea',
+      align: 'center',
+      valign: 'middle',
       field: 'linea',
       formatter: function (value, row, index) {
         if (row.linea !== null) {
-          return `<h5 class="mrg10A">${row.linea.toUpperCase()}</h5>`
+          return `<h5 class="mrg10A">${row.linea}</h5>`
         }
         return "<empty> - </empty>";
       }
@@ -72,7 +84,7 @@ $(document).ready(function () {
       valign: 'middle',
       field: 'vin',
       formatter: function (value, row, index) {
-        if (row.modelo !== null) {
+        if (row.vin !== null) {
           return `<h5 class="mrg10A">${row.vin}</h5>`
         }
         return "<empty> - </empty>";
@@ -84,8 +96,32 @@ $(document).ready(function () {
       valign: 'middle',
       field: 'placa',
       formatter: function (value, row, index) {
-        if (row.modelo !== null) {
+        if (row.placa !== null) {
           return `<h5 class="mrg10A">${row.placa}</h5>`
+        }
+        return "<empty> - </empty>";
+      }
+    },
+    {
+      title: 'Fecha Robo',
+      align: 'center',
+      valign: 'middle',
+      field: 'fecha_robo',
+      formatter: function (value, row, index) {
+        if (row.fecha_robo !== null) {
+          return `<h5 class="mrg10A">${row.fecha_robo}</h5>`
+        }
+        return "<empty> - </empty>";
+      }
+    },
+    {
+      title: 'Hora Robo',
+      align: 'center',
+      valign: 'middle',
+      field: 'hora_robo',
+      formatter: function (value, row, index) {
+        if (row.hora_robo !== null) {
+          return `<h5 class="mrg10A">${row.hora_robo}</h5>`
         }
         return "<empty> - </empty>";
       }
@@ -100,8 +136,8 @@ $(document).ready(function () {
         let btn;
 
         btn = `<div>`;
-        btn += `<button onClick="obtenerVehiculo('${btoa(row.id)}')" class="btn btn-info margin5">Editar</button>`;
-        btn += `<button onClick="eliminarVehiculo('${btoa(row.id)}')" class="btn btn-danger margin5">Eliminar</button>`;
+        btn += `<button onClick="obtenerReporte('${btoa(row.reporte_robo_id)}')" class="btn btn-info margin5">Editar</button>`;
+        btn += `<button onClick="eliminarReporte('${btoa(row.reporte_robo_id)}')" class="btn btn-danger margin5">Eliminar</button>`;
         btn += `</div>`;
 
         return btn;
@@ -117,8 +153,8 @@ $(document).ready(function () {
 
 $('#btnRegistrar').on('click', function () {
   reiniciarForm();
-  $('#formVehiculo').attr('action', `${baseUrl + urlGuardar}`);
-  $("#modalVehiculo").modal("show");
+  $('#formReporte').attr('action', `${baseUrl + urlGuardar}`);
+  $("#modalReporte").modal("show");
 });
 
 $('#btnLimpiar').on('click', function () {
@@ -134,14 +170,14 @@ $('#btnLimpiar').on('click', function () {
     }
   });
 
-  $('#tablaVehiculos').bootstrapTable('refresh');
+  $('#tablaReportes').bootstrapTable('refresh');
 });
 
 $('#btnBuscar').on('click', function () {
-  $('#tablaVehiculos').bootstrapTable('refresh');
+  $('#tablaReportes').bootstrapTable('refresh');
 });
 
-function obtenerVehiculo(vehiculoId) {
+function obtenerReporte(vehiculoId) {
 
   reiniciarForm();
 
@@ -150,7 +186,7 @@ function obtenerVehiculo(vehiculoId) {
   formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
 
   $.ajax({
-    url: `${baseUrl}vehiculos/obtenerVehiculo`,
+    url: `${baseUrl}reportes/obtenerReporte`,
     type: 'POST',
     contentType: false,
     data: formData,
@@ -159,17 +195,14 @@ function obtenerVehiculo(vehiculoId) {
     success: function (respuesta) {
       if (!respuesta.error) {
 
-        $('#marca_id').val(respuesta.datos.cat_marca_id);
+        $('#vehiculo_id').val(respuesta.datos.vehiculo_id);
         $('#txt_id').val(btoa(respuesta.datos.id));
-        $('#txt_linea').val(respuesta.datos.linea);
-        $('#color_id').val(respuesta.datos.cat_color_id);
-        $('#txt_modelo').val(respuesta.datos.modelo);
-        $('#txt_placa').val(respuesta.datos.placa);
-        $('#txt_vin').val(respuesta.datos.vin);
-        $('#propietario').val(respuesta.datos.propietarios[0].id);
+        $('#txt_fecha').val(respuesta.datos.fecha_robo);
+        $('#txt_hora').val(respuesta.datos.hora_robo);
+        $('#txt_detalles').val(respuesta.datos.detalles);
 
-        $('#formVehiculo').attr('action', `${baseUrl + urlEditar}`);
-        $("#modalVehiculo").modal("show");
+        $('#formReporte').attr('action', `${baseUrl + urlEditar}`);
+        $("#modalReporte").modal("show");
       }
       else {
         var n = new Noty({
@@ -191,7 +224,7 @@ function obtenerVehiculo(vehiculoId) {
 }
 
 
-function eliminarVehiculo(vehiculoId) {
+function eliminarReporte(vehiculoId) {
 
   let formData = new FormData();
 
@@ -209,7 +242,7 @@ function eliminarVehiculo(vehiculoId) {
     .then((willDelete) => {
       if (willDelete) {
         $.ajax({
-          url: `${baseUrl}vehiculos/eliminar`,
+          url: `${baseUrl}reportes/eliminar`,
           type: 'POST',
           contentType: false,
           data: formData,
@@ -230,7 +263,7 @@ function eliminarVehiculo(vehiculoId) {
                 }
               }).show();
 
-              $('#tablaVehiculos').bootstrapTable('refresh');
+              $('#tablaReportes').bootstrapTable('refresh');
             }
             else {
               var n = new Noty({
@@ -254,7 +287,7 @@ function eliminarVehiculo(vehiculoId) {
 }
 
 //Función de envio de formulario al controlador para el guardado del incidente
-$('#formVehiculo').parsley().on('field:validated', function () {
+$('#formReporte').parsley().on('field:validated', function () {
   var ok = $('.parsley-error').length === 0;
 }).on('form:submit', function (e) {
 
@@ -263,7 +296,7 @@ $('#formVehiculo').parsley().on('field:validated', function () {
 
   swal({
     title: "Información",
-    text: "¿Desea guardar el vehículo?",
+    text: "¿Desea guardar el  reporte de robo del vehículo?",
     icon: 'info',
     buttons: ["Cancelar", "Aceptar"],
     closeOnClickOutside: false,
@@ -272,8 +305,8 @@ $('#formVehiculo').parsley().on('field:validated', function () {
       if (willDelete) {
 
 
-        let url = $('#formVehiculo').attr('action');
-        let formData = new FormData(document.getElementById("formVehiculo"));
+        let url = $('#formReporte').attr('action');
+        let formData = new FormData(document.getElementById("formReporte"));
 
         $.ajax({
           url: url,
@@ -296,10 +329,10 @@ $('#formVehiculo').parsley().on('field:validated', function () {
                   }
                 }
               }).show();
-              document.getElementById("formVehiculo").reset();
-              $("#formVehiculo").find('.parsley-success').removeClass('parsley-success');
-              $("#modalVehiculo").modal("hide");
-              $('#tablaVehiculos').bootstrapTable('refresh');
+              document.getElementById("formReporte").reset();
+              $("#formReporte").find('.parsley-success').removeClass('parsley-success');
+              $("#modalReporte").modal("hide");
+              $('#tablaReportes').bootstrapTable('refresh');
 
             } else {
               var n = new Noty({
@@ -348,8 +381,8 @@ $('#formVehiculo').parsley().on('field:validated', function () {
 });
 
 function reiniciarForm() {
-  document.getElementById("formVehiculo").reset();
-  $("#formVehiculo").find('.parsley-success').removeClass('parsley-success');
-  $("#formVehiculo").find('.parsley-error').removeClass('parsley-error');
-  $("#formVehiculo").find('.parsley-errors-list').remove();
+  document.getElementById("formReporte").reset();
+  $("#formReporte").find('.parsley-success').removeClass('parsley-success');
+  $("#formReporte").find('.parsley-error').removeClass('parsley-error');
+  $("#formReporte").find('.parsley-errors-list').remove();
 }

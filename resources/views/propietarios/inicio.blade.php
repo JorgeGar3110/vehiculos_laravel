@@ -123,7 +123,7 @@
                                     data-parsley-errors-container="#cb_propietario5" required>
                             </div>
                             <div class="form-group col-md-6" id="cb_propietario6">
-                                <label for="cat_genero">Fecha nacimiento</label>
+                                <label for="cat_genero">Genero</label>
                                 <select id="cat_genero" class="form-control" name="propietarios[cat_genero_id]"
                                     data-cb="cb_propietario6" data-parsley-errors-container="#cb_propietario6" required>
                                     <option value="">Seleccione una opción</option>

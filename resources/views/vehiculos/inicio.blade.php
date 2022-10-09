@@ -16,18 +16,29 @@
                     <hr>
                 </div>
                 <div class="row" id="toolbar">
-                    {{-- <div class="col-md-4 padding15">
-                        <div class="form-group">
-                            <label for="marca">Marca like</label>
-                            <input type="text" id="marca" class="form-control filtro" name="cat_marcas-nombre-like">
+                    <div class="col-md-4 padding15">
+                        <div class="form-group" id="cb_marca">
+                            <label for="marca">Marca</label>
+                            <select id="marca" name="vehiculos-cat_marca_id-equal" class="form-control filtro">
+                                <option value="">Seleccione una opción</option>
+                                @foreach ($marcas as $marca)
+                                    <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-4 padding15">
                         <div class="form-group">
-                            <label for="marca2">Marca equal</label>
-                            <input type="text" id="marca2" class="form-control filtro" name="cat_marcas-nombre-equal">
+                            <label for="vin">VIN like</label>
+                            <input type="text" id="vin" class="form-control filtro" name="vehiculos-vin-like">
                         </div>
-                    </div> --}}
+                    </div>
+                    <div class="col-md-4 padding15">
+                        <div class="form-group">
+                            <label for="placa">Placa like</label>
+                            <input type="text" id="placa" class="form-control filtro" name="vehiculos-placa-like">
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 padding15">
@@ -69,7 +80,7 @@
                                     <label for="marca">Marca</label>
                                     <select id="marca_id" name="vehiculos[cat_marca_id]" class="form-control" required>
                                         <option value="">Seleccione una opción</option>
-                                        @foreach($marcas as $marca)
+                                        @foreach ($marcas as $marca)
                                             <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
                                         @endforeach
                                     </select>
@@ -78,13 +89,16 @@
                             <div class="col-md-8">
                                 <div class="form-group" id="cb_linea">
                                     <label for="txt_linea">Linea</label>
-                                    <input type="text" id="txt_linea" class="form-control filtro" name="vehiculos[linea]" data-cb="cb_linea" data-parsley-errors-container="#cb_linea" required>
+                                    <input type="text" id="txt_linea" class="form-control filtro" name="vehiculos[linea]"
+                                        data-cb="cb_linea" data-parsley-errors-container="#cb_linea" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group" id="cb_modelo">
                                     <label for="txt_modelo">Modelo</label>
-                                    <input type="text" id="txt_modelo" class="form-control filtro" name="vehiculos[modelo]" data-cb="cb_modelo" data-parsley-errors-container="#cb_modelo" required>
+                                    <input type="text" id="txt_modelo" class="form-control filtro"
+                                        name="vehiculos[modelo]" data-cb="cb_modelo"
+                                        data-parsley-errors-container="#cb_modelo" required>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -92,7 +106,7 @@
                                     <label for="color">Color</label>
                                     <select id="color_id" name="vehiculos[cat_color_id]" class="form-control" required>
                                         <option value="">Seleccione una opción</option>
-                                        @foreach($colores as $color)
+                                        @foreach ($colores as $color)
                                             <option value="{{ $color->id }}">{{ $color->nombre }}</option>
                                         @endforeach
                                     </select>
@@ -101,21 +115,26 @@
                             <div class="col-md-4">
                                 <div class="form-group" id="cb_placa">
                                     <label for="txt_placa">Placa</label>
-                                    <input type="text" id="txt_placa" class="form-control filtro" name="vehiculos[placa]" data-cb="cb_placa" data-parsley-errors-container="#cb_placa" required>
+                                    <input type="text" id="txt_placa" class="form-control filtro"
+                                        name="vehiculos[placa]" data-cb="cb_placa"
+                                        data-parsley-errors-container="#cb_placa" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group" id="cb_vin">
                                     <label for="txt_placa">VIN</label>
-                                    <input type="text" id="txt_vin" class="form-control filtro" name="vehiculos[vin]" data-cb="cb_vin" data-parsley-errors-container="#cb_vin" required>
+                                    <input type="text" id="txt_vin" class="form-control filtro"
+                                        name="vehiculos[vin]" data-cb="cb_vin" data-parsley-errors-container="#cb_vin"
+                                        required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group" id="cb_propietario">
                                     <label for="propietario">Propietario</label>
-                                    <select id="propietario" name="propietarios_vehiculos[propietario_id]" class="form-control" required>
+                                    <select id="propietario" name="propietarios_vehiculos[propietario_id]"
+                                        class="form-control" required>
                                         <option value="">Seleccione una opción</option>
-                                        @foreach($propietarios as $propietario)
+                                        @foreach ($propietarios as $propietario)
                                             <option value="{{ $propietario->id }}">{{ $propietario->propietario }}</option>
                                         @endforeach
                                     </select>

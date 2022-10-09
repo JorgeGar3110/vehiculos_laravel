@@ -80,13 +80,20 @@ class VehiculosController extends Controller
 
         $id = base64_decode($request->id);
 
-        $vehiculo = vehiculos::find($id);
+        $vehiculo = vehiculos::where('id',$id)
+                    ->with(['propietarios' => function ($q) use($id)
+                    {
+                        $q->where('propietario_actual', true)
+                        ->orderBy('id', 'desc')
+                        ->take(1);
+                    }])
+                    ->get();        
 
         if (!$vehiculo) {
             $response['error'] = true;
             $response['msj'] = "No se encontraron coincidencias";
         } else {
-            $response['datos'] = $vehiculo;
+            $response['datos'] = $vehiculo[0];
         }
 
         return response()->json($response);
@@ -126,13 +133,31 @@ class VehiculosController extends Controller
 
 
         DB::beginTransaction();
+
         $vehiculoId = null;
-        $vehiculoId = vehiculos::insertGetId($request->vehiculos);
+
+        $query = vehiculos::select("*")
+                    ->where('vin', '=', $request->vehiculos['vin'])
+                    ->whereNull('deleted_at');
+
+        $queryCount = $query;
+        if($queryCount->get()->count() == 0)
+        {
+            $vehiculoId = vehiculos::insertGetId($request->vehiculos);
+        }
+        else
+        {
+            $datosVehiculo = $query->get()[0];
+            vehiculos::where("id", '=', $datosVehiculo->id)
+            ->update($request->vehiculos);
+
+            $vehiculoId = $datosVehiculo->id;
+
+        }
 
         $propietarioVehiculo = $request->propietarios_vehiculos;
         $propietarioVehiculo['vehiculo_id'] = $vehiculoId;
         $propietarioVehiculo['propietario_actual'] = true;
-
 
         $propietario = propietarios_vehiculos::insert($propietarioVehiculo);
 

@@ -125,7 +125,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ url('/reportes') }}">
                                 <span data-feather="file" class="align-text-bottom"></span>
                                 Reporte de robo
                             </a>

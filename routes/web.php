@@ -6,6 +6,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PropietariosController;
 use App\Http\Controllers\VehiculosController;
+use App\Http\Controllers\ReportesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +50,11 @@ Route::post('/vehiculos/obtenerVehiculo', [VehiculosController::class, 'obtenerV
 Route::post('/vehiculos/editar', [VehiculosController::class, 'editar']);
 Route::post('/vehiculos/guardar', [VehiculosController::class, 'guardar']);
 Route::post('/vehiculos/eliminar', [VehiculosController::class, 'eliminar']);
+
+Route::get('/reportes', [ReportesController::class, 'inicio']);
+Route::get('/reportes/obtenerRegistros', [ReportesController::class, 'obtenerRegistros']);
+Route::post('/reportes/obtenerReporte', [ReportesController::class, 'obtenerReporte']);
+Route::post('/reportes/editar', [ReportesController::class, 'editar']);
+Route::post('/reportes/guardar', [ReportesController::class, 'guardar']);
+Route::post('/reportes/eliminar', [ReportesController::class, 'eliminar']);
 
